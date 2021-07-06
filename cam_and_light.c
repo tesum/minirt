@@ -6,7 +6,7 @@
 /*   By: demilan <demilan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 17:02:35 by demilan           #+#    #+#             */
-/*   Updated: 2021/07/06 20:07:16 by demilan          ###   ########.fr       */
+/*   Updated: 2021/07/06 21:21:43 by demilan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,18 @@ void	new_camera(void)
 	double		len;
 	t_vec3		vup;
 	
-	vup = new_vec3(0, 1, 0);
+	vup = new_vec3(0.0, 1.0, 0.0);
 	ratio = 16.0 / 9.0;
-	vp_h = tan(((double)g_scene.cams.FOV * (M_PI / 180.0)) / 2.0);
+	vp_h = tan(((double)g_scene.cams.FOV) / 2.0);
 	vp_w = ratio * vp_h;
+	printf("========= %f\n", g_scene.cams.origin.x);
+	printf("========= %f\n", g_scene.cams.origin.x);
+	printf("========= %f\n", g_scene.cams.origin.y);
+	printf("========= %f\n", g_scene.cams.direction.x);
+	printf("========= %f\n", g_scene.cams.direction.x);
+	printf("========= %f\n", g_scene.cams.direction.y);
 	printf("========= %f\n", vp_h);
-	printf("========= %f\n", ratio);
+	// printf("========= %f\n", ratio);
 	printf("========= %f\n", vp_w);
 	// g_scene.cams.w = normalize(vec_m_vec(g_scene.cams.origin, g_scene.cams.direction));
 	g_scene.cams.w = normalize(vec_m_vec(g_scene.cams.origin, g_scene.cams.direction));

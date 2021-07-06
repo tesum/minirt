@@ -34,7 +34,9 @@ t_vec3	get_ray(double w, double h)
 	// printf("========= %f\n", cam.vertical.x);
 	// printf("========= %f\n", cam.vertical.y);
 	// printf("========= %f\n", cam.vertical.z);
-	ray = vec_m_vec(vec_p_vec(vec_p_vec(cam.l_left_corner, mul_vec(cam.horizontal, w)), mul_vec(cam.vertical, h)), cam.origin);
-	// ray = vec_p_vec(cam.l_left_corner, vec_m_vec(vec_p_vec(mul_vec(cam.horizontal, w), mul_vec(cam.vertical, h)), cam.origin));
+	// ray = vec_m_vec(vec_p_vec(vec_p_vec(cam.l_left_corner, mul_vec(cam.horizontal, w)), mul_vec(cam.vertical, h)), cam.origin);
+	ray = vec_p_vec(cam.l_left_corner,
+		vec_p_vec(mul_vec(cam.horizontal, w),
+			vec_m_vec(mul_vec(cam.vertical, h), cam.origin)));
 	return (normalize(ray));
 }

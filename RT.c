@@ -6,7 +6,7 @@
 /*   By: demilan <demilan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 18:55:41 by demilan           #+#    #+#             */
-/*   Updated: 2021/07/06 20:13:06 by demilan          ###   ########.fr       */
+/*   Updated: 2021/07/07 02:23:06 by demilan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,22 +24,32 @@ t_vec3	*minus_vec(t_vec3 *vec)
 
 t_vec3	castRay(t_vec3 ro, t_vec3 rd)
 {
+	size_t	i;
 	t_vec2	it;
-	t_vec3	itPos;
-	t_vec3	light;
-	t_vec3	color;
-	double	diffuse;
-
-	diffuse = 0;
-	it = sphIntersect(ro, rd, g_scene.sphers[0].center, g_scene.sphers[0].r);
-	// printf("it = %f\n", it.x);
-	if (it.x > 0.0 || it.y > 0)
+	t_vec3	pos;
+	t_vec3	normal;
+	double	itmin;
+	
+	itmin = __DBL_MAX__;
+	i = 0;
+	while (i < g_scene.c_sp)
 	{
-		color = new_rgb(1, 0, 0);
-	// printf("-----|%d|-----\n"), create_rgb(color);
-
-		return (color);
+		it = sph_intersect(ro, rd, g_scene.sphers[i]);
+		if (it.x > 0.0 && it.x < itmin)
+		{
+			g_scene.mlx.rgb = mul_vec(g_scene.sphers[i].color_light, g_scene.alight.aspect);
+			pos = g_scene.sphers[i].pos;
+			normal = g_scene.sphers[i].nor;
+			itmin = g_scene.sphers[i].t;
+		}
+		i++;
 	}
+	if (itmin < __DBL_MAX__)
+	{
+		printf("==\n");
+		return (mul_vec(g_scene.mlx.rgb, diffuse(pos, normal, rd)));
+	}
+	// printf("it = %f\n", it.x);
 	
 		// return (sp->color_light);
 		
@@ -60,7 +70,7 @@ t_vec3	castRay(t_vec3 ro, t_vec3 rd)
 	// return (sp->color_light);
 	// return (create_rgb(color) + sp->color_light);
 	// return (diffuse);
-	return (new_rgb(255, 33, 235));
+	return (new_vec3(255, 255, 255));
 }
 
 // double	sphSoftShadow(t_vec3 *ro, t_vec3 *rd, t_vec3 *ce, double ra)

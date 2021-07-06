@@ -6,7 +6,7 @@
 /*   By: demilan <demilan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 19:44:33 by demilan           #+#    #+#             */
-/*   Updated: 2021/07/06 20:17:13 by demilan          ###   ########.fr       */
+/*   Updated: 2021/07/06 23:37:33 by demilan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,29 +38,37 @@
 // 		return (1);
 // 	return (0);
 // }
+void	sph_normal(t_vec3 ro, t_vec3 rd, t_vec2 tmin, t_sphere sphers)
+{
+	sphers.t = f_min(tmin.x, tmin.y);
+	sphers.pos = vec_p_vec(ro, mul_vec(rd, sphers.t));
+	sphers.nor = normalize( \
+		vec_m_vec(sphers.pos, sphers.center));
+}
 
-t_vec2 sphIntersect(t_vec3 ro, t_vec3 rd, t_vec3 ce, double ra)
+t_vec2 sph_intersect(t_vec3 ro, t_vec3 rd, t_sphere sphere)
 {
 	// printf("====== %f\n", rd.x);
 	// printf("====== %f\n", rd.y);
 	// printf("====== %f\n", rd.z);
 	// printf("====== %f\n", ra);
-	t_vec3	oc = vec_m_vec(ro, ce);
+	t_vec3	oc = vec_m_vec(ro, sphere.center);
 	// printf("%f --- %f --- %f\n", rd.x, rd.y, rd.z);
 	// printf("%f and %f and %f\n", ro->x, ro->y, ro->z);
 	double a = len_squared(rd);
-	double b = scalar_product(oc, rd);
-	double c = scalar_product(oc, oc) - ra * ra;
-	double h = b * b -  a * c;
+	double b = 2 * scalar_product(oc, rd);
+	double c = scalar_product(oc, oc) - sphere.r * sphere.r;
+	double d = b * b - 4 * a * c;
 	// vec2 = malloc(sizeof(t_vec2));
 	// if (!vec2)
 	// 	er_exit(ERR_MALLOC);
-	if (h < 0.0)
+	if (d < 0.0)
 		return (new_vec2(-1.0, -1.0)); // no intersection
 
 	// printf("-- %f\n", h);
-	h = sqrt(h);
-	return (new_vec2((-b - h) / a, (-b + h) / a));
+	d = sqrt(d);
+	sph_normal(ro, rd, new_vec2((-b - d) / (2 * a), (-b + d) / (2 * a)), sphere);
+	return (new_vec2((-b - d) / (2 * a), (-b + d) / (2 * a)));
 }
 
 //  oc = vec3_sub(ro, sp->center);

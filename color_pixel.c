@@ -6,7 +6,7 @@
 /*   By: demilan <demilan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/12 17:28:28 by demilan           #+#    #+#             */
-/*   Updated: 2021/07/06 18:01:36 by demilan          ###   ########.fr       */
+/*   Updated: 2021/07/07 00:48:52 by demilan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_vec2	get_pixel(t_vec2 resolution, int mlx_x, int mlx_y)
 	return (pixel);
 }
 
-void	color_pixel(t_mlx *mlx_s, t_vec3 color)
+void	color_pixel(t_vec3 color)
 {
 	int	r;
 	int	g;
@@ -43,11 +43,11 @@ void	color_pixel(t_mlx *mlx_s, t_vec3 color)
 	g = color.y * 255.999;
 	b = color.z * 255.999;
 	
-	mlx_s->rgb.x = r * 256 * 256;
-	mlx_s->rgb.y = g * 256;
-	mlx_s->rgb.z = b;
+	g_scene.mlx.rgb.x = r * 256 * 256;
+	g_scene.mlx.rgb.y = g * 256;
+	g_scene.mlx.rgb.z = b;
 	// printf("r: %f  | g: %f  | b: %f\n", mlx_s->rgb.x, mlx_s->rgb.y, mlx_s->rgb.z);
-	mlx_s->color = mlx_s->rgb.x + mlx_s->rgb.y + mlx_s->rgb.z;
+	g_scene.mlx.color = g_scene.mlx.rgb.x + g_scene.mlx.rgb.y + g_scene.mlx.rgb.z;
 	// printf("color: %d\n", mlx_s->color);
 }
 

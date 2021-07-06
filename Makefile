@@ -12,6 +12,7 @@ SRCS	=	main.c			\
 			color_pixel.c	\
 			my_math.c		\
 			ft_split_rt.c	\
+			utils.c			\
 			utils3.c		\
 			gnl/get_next_line.c	\
 			gnl/get_next_line_utils.c

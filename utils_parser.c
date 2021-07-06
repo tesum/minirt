@@ -40,7 +40,7 @@ void	parse_sphere(char *str)
 	t_vec3		vec3;
 	t_sphere	sphere;
 
-	if (str[0] != 's' && str[1] != 'p')
+	if (str[0] != 's' || str[1] != 'p')
 		return ;
 	str += 2;
 	g_scene.sphers[g_scene.c_sp].center = parse_vec3(&str);
@@ -59,7 +59,7 @@ void	parse_plane(char *str)
 	char		**vec;
 	t_vec3		vec3;
 
-	if (str[0] != 'p' && str[1] != 'l')
+	if (str[0] != 'p' || str[1] != 'l')
 		return ;
 	str += 2;
 	g_scene.plane[g_scene.c_pl].origin = parse_vec3(&str);
@@ -78,7 +78,7 @@ void	parse_cylinder(char *str)
 {
 	t_vec3		vec3;
 
-	if (str[0] != 'c' && str[1] != 'y')
+	if (str[0] != 'c' || str[1] != 'y')
 		return ;
 	str += 2;
 	g_scene.cylinder[g_scene.c_cy].origin = parse_vec3(&str);

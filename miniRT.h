@@ -6,7 +6,7 @@
 /*   By: demilan <demilan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 15:56:11 by demilan           #+#    #+#             */
-/*   Updated: 2021/07/06 20:07:15 by demilan          ###   ########.fr       */
+/*   Updated: 2021/07/07 01:49:37 by demilan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,8 @@ typedef struct s_mlx
 {
 	void	*mlx_p;
 	void	*win_p;
-	
-	int		mlx_x;
-	int		mlx_y;
-	t_vec3	rgb;
 	int		color;
+	t_vec3	rgb;
 }				t_mlx;
 
 typedef struct s_camera
@@ -76,8 +73,11 @@ typedef struct s_camera
 typedef struct s_sphere
 {
 	t_vec3		center;
-	double		r;
 	t_vec3		color_light;
+	t_vec3		pos;
+	t_vec3		nor;
+	double		t;
+	double		r;
 }				t_sphere;
 
 typedef struct s_light
@@ -123,6 +123,7 @@ typedef struct s_scene
 	t_sphere		sphers[MAX_OBJ];
 	t_plane			plane[MAX_OBJ];
 	t_cylinder		cylinder[MAX_OBJ];
+	t_mlx			mlx;
 	
 }				t_scene;
 
@@ -158,7 +159,7 @@ double		smoothstep(double min, double max, double value);
 char		**ft_split_rt(char const *s, char *c);
 void		free_split(char **str);
 
-void		color_pixel(t_mlx *mlx_s, t_vec3 color);
+void		color_pixel(t_vec3 color);
 t_vec3		new_rgb(int r, int g, int b);
 int			create_rgb(t_vec3 *rgb);
 t_vec3		normalize(t_vec3 p);
@@ -173,6 +174,7 @@ double		len_squared(t_vec3 vec3);
 t_vec2		get_pixel(t_vec2 resolution, int mlx_x, int mlx_y);
 
 t_vec3		get_ray(double w, double h);
+double		diffuse(t_vec3 pos, t_vec3 normal, t_vec3 rd);
 
 t_scene		*new_scene(t_camera *cam, t_sphere *sphere);
 void		new_camera(void);
@@ -185,7 +187,7 @@ t_light		new_light(t_vec3 origin, double aspect, t_vec3 color);
 t_sphere	new_sphere(t_vec3 center, double r, t_vec3 color);
 
 // check
-t_vec2		sphIntersect(t_vec3 ro, t_vec3 rd, t_vec3 ce, double ra);
+t_vec2		sph_intersect(t_vec3 ro, t_vec3 rd, t_sphere sphere);
 t_vec3		castRay(t_vec3 ro, t_vec3 rd);
 
 void		er_exit(int errno);

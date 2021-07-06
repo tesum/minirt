@@ -6,7 +6,7 @@
 /*   By: demilan <demilan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 17:13:06 by demilan           #+#    #+#             */
-/*   Updated: 2021/07/06 17:55:52 by demilan          ###   ########.fr       */
+/*   Updated: 2021/07/06 21:27:23 by demilan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ t_vec3	normalize(t_vec3 vec)
 	float	len;
 
 	len = sqrt(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z);
-	vec.x = 1 / len;
-	vec.y = 1 / len;
-	vec.z = 1 / len;
+	vec.x *= 1 / len;
+	vec.y *= 1 / len;
+	vec.z *= 1 / len;
 	return(vec);
 }
