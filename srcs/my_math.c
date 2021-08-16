@@ -6,7 +6,7 @@
 /*   By: demilan <demilan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 01:22:56 by demilan           #+#    #+#             */
-/*   Updated: 2021/05/13 01:35:06 by demilan          ###   ########.fr       */
+/*   Updated: 2021/08/16 21:16:04 by demilan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ double	f_min(double one, double two)
 double	smoothstep(double min, double max, double value)
 {
 	double	x;
-	
-	x = f_max(0, f_min(1, (value-min)/(max-min)));
+
+	x = f_max(0, f_min(1, (value - min) / (max - min)));
 	return (x * x * (3 - 2 * x));
 }

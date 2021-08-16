@@ -6,7 +6,7 @@
 /*   By: demilan <demilan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 15:41:54 by demilan           #+#    #+#             */
-/*   Updated: 2021/07/06 15:44:27 by demilan          ###   ########.fr       */
+/*   Updated: 2021/08/16 21:15:02 by demilan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ void	parse_alight(char *str)
 		exit_error("Invalid aspect alight", ERR_CREATE_ALIGHT);
 	g_scene.alight.color = parse_vec3(&str);
 	vec3 = g_scene.alight.color;
-	if ((vec3.x < 0.0 || vec3.x > 255.00000) || (vec3.y < 0.0 || vec3.y > 255.0) || (vec3.z < 0.0 || vec3.z > 255.0))
+	if ((vec3.x < 0.0 || vec3.x > 255.00000) || (vec3.y < 0.0 \
+		|| vec3.y > 255.0) || (vec3.z < 0.0 || vec3.z > 255.0))
 		exit_error("Invalid color alight", ERR_CREATE_ALIGHT);
 	g_scene.req_count_obj++;
 }

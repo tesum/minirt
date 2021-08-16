@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_split_rt.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: demilan <demilan@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/08/16 21:21:47 by demilan           #+#    #+#             */
+/*   Updated: 2021/08/16 21:21:48 by demilan          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "miniRT.h"
 
 // ft_strrchr(c, s[++i]) != 0	-	нашел разделитель
@@ -13,11 +25,13 @@ static	int	elements(const char *s, char *c)
 	while (s[i])
 	{
 		if (ft_strrchr(c, s[i]) != 0)
-			while (ft_strrchr(c, s[++i]) != 0);
+			while (ft_strrchr(c, s[++i]) != 0)
+				;
 		else if (ft_strrchr(c, s[i]) == 0)
 		{
 			elem++;
-			while (ft_strrchr(c, s[++i]) == 0);
+			while (ft_strrchr(c, s[++i]) == 0)
+				;
 		}
 	}
 	return (elem);
@@ -57,8 +71,6 @@ char	**ft_split_rt(char const *s, char *c)
 	if (s == NULL)
 		return (NULL);
 	elem_max = elements(s, c);
-	printf("elem_max = %d\n", elem_max);
-	// printf("s = %s|\n", s);
 	str = malloc((elem_max + 1) * sizeof(char *));
 	if (str == NULL)
 		return (NULL);

@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: demilan <demilan@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/08/16 21:21:54 by demilan           #+#    #+#             */
+/*   Updated: 2021/08/16 21:21:55 by demilan          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "miniRT.h"
 
 int	shadow(t_vec3 ro, t_vec3 rd)
 {
-	t_vec2	it;
+	double	it;
 	int		i;
 	double	tmin;
 
@@ -11,14 +23,14 @@ int	shadow(t_vec3 ro, t_vec3 rd)
 	while (i < g_scene.c_sp || i < g_scene.c_pl || i < g_scene.c_cy)
 	{
 		it = sph_intersect(ro, rd, &g_scene.sphers[i]);
-		if (it.x > 0.001 || it.y > 0.001)
-			tmin = f_min(it.x, it.y);
-		it.x = pl_intersect(ro, rd, &g_scene.plane[i]);
-		if (it.x > 0.1 || it.x < tmin)
-			tmin = it.x;
+		if (it > 0.001)
+			tmin = it;
+		// it = pl_intersect(ro, rd, &g_scene.plane[i]);
+		// if (it > 0.1 || it < tmin)
+		// 	tmin = it;
 		// it = cy_inter(ro, rd, &g_scene.cylinder[i]); // глушит весь свет
-		// if (it.x > 0.1 || it.x < tmin)
-		// 	tmin = it.x;
+		// if (it > 0.1 || it < tmin)
+		// 	tmin = it;
 		i++;
 	}
 	if (tmin < 1.0)
@@ -41,11 +53,12 @@ double	diffuse(t_vec3 pos, t_vec3 normal, t_vec3 rd)
 		if (shadow(pos, light_dir) == 1)
 			return (f_min(power, 1.0));
 	}
-
-	power += (f_max(dot_light, 0.0) * g_scene.lights.aspect) / (sqrt(len_squared(normal)) * sqrt(len_squared(light_dir)));
-
-	r = vec_m_vec(mul_vec(mul_vec(normal, 2), scalar_product(normal, light_dir)), light_dir);
+	power += (f_max(dot_light, 0.0) * g_scene.lights.aspect) / \
+		(sqrt(len_squared(normal)) * sqrt(len_squared(light_dir)));
+	r = vec_m_vec(mul_vec(mul_vec(normal, 2), \
+		scalar_product(normal, light_dir)), light_dir);
 	rd = mul_vec(rd, -1);
-	power += pow(f_max(scalar_product(r, rd) / (sqrt(len_squared(r)) * sqrt(len_squared(rd))), 0.0), 256.0) * g_scene.lights.aspect;
+	power += pow(f_max(scalar_product(r, rd) / (sqrt(len_squared(r)) * \
+		sqrt(len_squared(rd))), 0.0), 256.0) * g_scene.lights.aspect;
 	return (f_min(power, 1.0));
 }

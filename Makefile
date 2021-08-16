@@ -28,14 +28,15 @@ RM		=	rm -f
 all		:	$(NAME)
 
 $(NAME)	:	$(OBJ) $(HEADER)
-			# gcc -g -Lmlx -lmlx -framework OpenGL -framework AppKit libmlx.dylib libftprintf.a libft.a $(SRCS) -o $(NAME)
-			gcc -g -Lmlx -lmlx -framework OpenGL -framework AppKit libmlx.a -Llibft -lft $(SRCS) -o $(NAME)
+			gcc -g -Lmlx -lmlx -framework OpenGL -framework AppKit libmlx.dylib libftprintf.a libft.a $(SRCS) -o $(NAME)
+			# gcc -g -Lmlx -lmlx -framework OpenGL -framework AppKit libmlx.a -Llibft -lft $(SRCS) -o $(NAME)
 # -lftprintf libftprintf.a
 
 libft	:
 			cd libft
 			make
 			mv libft.a ../
+
 clean	:
 			$(RM) $(OBJ)
 

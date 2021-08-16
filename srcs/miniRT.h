@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsenijdrozdov <arsenijdrozdov@student.    +#+  +:+       +#+        */
+/*   By: demilan <demilan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 15:56:11 by demilan           #+#    #+#             */
-/*   Updated: 2021/08/09 20:08:30 by arsenijdroz      ###   ########.fr       */
+/*   Updated: 2021/08/16 12:56:59 by demilan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,12 @@ typedef struct s_vec4
 	double	z;
 	double	w;
 }				t_vec4;
+
+typedef struct s_ray
+{
+	t_vec3	ro;
+	t_vec3	rd;
+}				t_ray;
 
 typedef struct s_mlx
 {
@@ -112,7 +118,7 @@ typedef struct s_cylinder
 	t_vec3		color;
 	double		t;
 	t_vec3		pos;
-	
+
 	t_vec3		a;
 	t_vec3		c;
 	t_vec3		ao;
@@ -137,7 +143,7 @@ typedef struct s_scene
 	t_plane			plane[MAX_OBJ];
 	t_cylinder		cylinder[MAX_OBJ];
 	t_mlx			mlx;
-	
+	double			itmin;
 }				t_scene;
 
 t_scene		g_scene;
@@ -145,6 +151,7 @@ int			isElem(char *s);
 
 t_vec3		new_vec3(double x, double y, double z);
 t_vec2		new_vec2(double x, double y);
+t_ray		new_ray(t_vec3 ro, t_vec3 rd);
 
 // parser
 void		parce(char *map);
@@ -160,7 +167,7 @@ t_vec3		parse_vec3(char **str);
 
 double		sphSoftShadow(t_vec3 *ro, t_vec3 *rd, t_vec3 *ce, double ra);
 double		pl_intersect(t_vec3 ro, t_vec3 rd, t_plane *plane);
-t_vec2		 cy_inter(t_vec3 ro, t_vec3 rd, t_cylinder *cylinder);
+double		cy_inter(t_vec3 ro, t_vec3 rd, t_cylinder *cylinder);
 
 //	My math
 
@@ -202,8 +209,8 @@ t_light		new_light(t_vec3 origin, double aspect, t_vec3 color);
 t_sphere	new_sphere(t_vec3 center, double r, t_vec3 color);
 
 // check
-t_vec2		sph_intersect(t_vec3 ro, t_vec3 rd, t_sphere *sphere);
-t_vec3		castRay(t_vec3 ro, t_vec3 rd);
+double		sph_intersect(t_vec3 ro, t_vec3 rd, t_sphere *sphere);
+t_vec3		castRay(t_ray ray);
 
 void		er_exit(int errno);
 void		exit_error(char *error, int code);
