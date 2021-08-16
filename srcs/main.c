@@ -6,7 +6,7 @@
 /*   By: arsenijdrozdov <arsenijdrozdov@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 15:31:33 by demilan           #+#    #+#             */
-/*   Updated: 2021/08/09 20:07:29 by arsenijdroz      ###   ########.fr       */
+/*   Updated: 2021/08/16 09:41:50 by arsenijdroz      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	main(int argc, char	**argv)
 	// g_scene.lights = new_light(new_vec3(6, 4, -1), 0.9, new_rgb(255, 255,255));
 	// g_scene.cams = new_camera(new_vec3(0, 0, 0), new_vec3(0, 0, -1), 80);
 
-	g_scene.mlx.win_p = mlx_new_window(g_scene.mlx.mlx_p, g_scene.width, g_scene.hight, "LoL");
+	g_scene.mlx.win_p = mlx_new_window(g_scene.mlx.mlx_p, g_scene.width, g_scene.hight, "miniRT");
 	i = 0;
 	g_scene.mlx.color = 0;
 	while (i <= g_scene.width)

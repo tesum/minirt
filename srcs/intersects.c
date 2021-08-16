@@ -6,7 +6,7 @@
 /*   By: arsenijdrozdov <arsenijdrozdov@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 19:44:33 by demilan           #+#    #+#             */
-/*   Updated: 2021/08/16 03:59:22 by arsenijdroz      ###   ########.fr       */
+/*   Updated: 2021/08/16 09:53:54 by arsenijdroz      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,6 @@ double	pl_intersect(t_vec3 ro, t_vec3 rd, t_plane *plane)
 // 		return (-1.0);
 // 	h = sqrt(h);
 // 	t = (-cylinder->k1 - h) / cylinder->k2;
-// 	y = scalar_product(cylinder->ao, cylinder->oc) + t * scalar_product(cylinder->ao, rd);
-// 	if (y > 0.0 &&  y < len_squared(cylinder->ao))
 // 		return (0);
 // }
 
@@ -101,6 +99,8 @@ t_vec2 cy_inter(t_vec3 ro, t_vec3 rd, t_cylinder *cylinder)
 	b = 2 * (scalar_product(rd, x) - scalar_product(rd, cylinder->n_vector) * scalar_product(x, cylinder->n_vector));
 	d = sqrt(pow(b, 2) - 4 * a * c);
 	t = new_vec2((-b + d) / 2 * a, (-b - d) / 2 * a);
+// 	y = scalar_product(cylinder->ao, cylinder->oc) + t * scalar_product(cylinder->ao, rd);
+// 	if (y > 0.0 &&  y < len_squared(cylinder->ao))
 	if (t.x > 0.1 || t.y > 0.1)
 	{
 		cylinder->t = f_min(t.x, t.y);

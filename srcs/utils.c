@@ -13,12 +13,12 @@ int	shadow(t_vec3 ro, t_vec3 rd)
 		it = sph_intersect(ro, rd, &g_scene.sphers[i]);
 		if (it.x > 0.001 || it.y > 0.001)
 			tmin = f_min(it.x, it.y);
-		// it.x = pl_intersect(ro, rd, &g_scene.plane[i]);
-		// if (it.x > 0.1 || it.x < tmin)
-		// 	tmin = it.x;
-		it = cy_inter(ro, rd, &g_scene.cylinder[i]); // глушит весь свет
+		it.x = pl_intersect(ro, rd, &g_scene.plane[i]);
 		if (it.x > 0.1 || it.x < tmin)
 			tmin = it.x;
+		// it = cy_inter(ro, rd, &g_scene.cylinder[i]); // глушит весь свет
+		// if (it.x > 0.1 || it.x < tmin)
+		// 	tmin = it.x;
 		i++;
 	}
 	if (tmin < 1.0)

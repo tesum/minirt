@@ -6,7 +6,7 @@
 /*   By: arsenijdrozdov <arsenijdrozdov@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 18:55:41 by demilan           #+#    #+#             */
-/*   Updated: 2021/08/16 03:59:35 by arsenijdroz      ###   ########.fr       */
+/*   Updated: 2021/08/16 09:56:23 by arsenijdroz      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ t_vec3	castRay(t_vec3 ro, t_vec3 rd)
 		// normal = menu[3];
 		if (itmin < __DBL_MAX__)
 		{
-			free(menu);
+			free(menu);// не правильный подход чистить меню надо по всем фигурам пройтись и найти минимал в этой точке потом чистить
 			return (mul_vec(g_scene.mlx.rgb, diffuse(pos, normal, rd)));
 		}
 		itmin = cast_pl(menu, i, &pos, &normal);
