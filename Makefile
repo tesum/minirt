@@ -1,23 +1,23 @@
 NAME	=	miniRT
 
-SRCS	=	main.c			\
-			parcer.c		\
-			utils_parser.c	\
-			utils_parser2.c	\
-			cam_and_light.c	\
-			intersects.c	\
-			funcs_vectors.c	\
-			RT.c			\
-			figure.c		\
-			color_pixel.c	\
-			my_math.c		\
-			ft_split_rt.c	\
-			utils.c			\
-			utils3.c		\
+SRCS	=	srcs/main.c			\
+			srcs/parcer.c		\
+			srcs/utils_parser.c	\
+			srcs/utils_parser2.c	\
+			srcs/cam_and_light.c	\
+			srcs/intersects.c	\
+			srcs/funcs_vectors.c	\
+			srcs/RT.c			\
+			srcs/figure.c		\
+			srcs/color_pixel.c	\
+			srcs/my_math.c		\
+			srcs/ft_split_rt.c	\
+			srcs/utils.c			\
+			srcs/utils3.c		\
 			gnl/get_next_line.c	\
 			gnl/get_next_line_utils.c
 
-HEADER	=	miniRT.h\
+HEADER	=	srcs/miniRT.h\
 
 OBJ		=	$(patsubst %.c, %.o, $(SRCS))
 
@@ -28,7 +28,9 @@ RM		=	rm -f
 all		:	$(NAME)
 
 $(NAME)	:	$(OBJ) $(HEADER)
-			gcc -g $(SRCS) -lmlx -framework OpenGL -framework AppKit libmlx.dylib libftprintf.a libft.a -o $(NAME)
+			# gcc -g -Lmlx -lmlx -framework OpenGL -framework AppKit libmlx.dylib libftprintf.a libft.a $(SRCS) -o $(NAME)
+			gcc -g -Lmlx -lmlx -framework OpenGL -framework AppKit libmlx.a -Llibft -lft $(SRCS) -o $(NAME)
+# -lftprintf libftprintf.a
 
 libft	:
 			cd libft
