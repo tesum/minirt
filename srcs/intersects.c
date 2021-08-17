@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   intersects.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: demilan <demilan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arsenijdrozdov <arsenijdrozdov@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 19:44:33 by demilan           #+#    #+#             */
-/*   Updated: 2021/08/16 21:17:35 by demilan          ###   ########.fr       */
+/*   Updated: 2021/08/17 13:03:15 by arsenijdroz      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_vec2	quadratic(double a, double b, double c)
 		else
 			k = -0.5 * (b - sqrt(d));
 		t.x = k / a;
-		t.y = c / a;
+		t.y = c / k;
 	}
 	if (t.x > t.y)
 	{
@@ -118,34 +118,79 @@ double	pl_intersect(t_vec3 ro, t_vec3 rd, t_plane *plane)
 // 		return (0);
 // }
 
-double	slave(t_cylinder *cy, t_vec2 t, t_ray ray, t_vec2 y)
+double	limit(t_vec2 t, t_cylinder *cy, t_ray ray)
 {
-	y.x = scalar_product(cy->c, cy->oc) + t.x * scalar_product(cy->c, ray.rd);
-	y.y = scalar_product(cy->c, cy->oc) + t.y * scalar_product(cy->c, ray.rd);
-	if (y.x > 0.0 && y.x < sqrt(len_squared(cy->ao)) * 0.5)
+	t_vec3	a;
+	t_vec3	b;
+	t_vec3	m;
+
+	if (t.x > 0)
 	{
-		printf("Here1\n");
-		cy->t = t.x;
-		cy->pos = vec_p_vec(ray.ro, mul_vec(ray.rd, cy->t));
-		cy->n_vector = normalize(vec_m_vec(vec_p_vec(cy->oc, \
-			mul_vec(ray.rd, cy->t)), mul_vec(cy->c, y.x)));
-		return (t.x);
+		a = vec_p_vec(cy->origin, mul_vec(cy->n_vector, cy->h));
+		b = vec_p_vec(ray.ro, mul_vec(ray.rd, t.x));
+		if (scalar_product(cy->n_vector, vec_m_vec(b, cy->origin)) > 0)
+		{
+			if (scalar_product(cy->n_vector, vec_m_vec(b, a)) < 0)
+			{
+				cy->t = t.x;
+				cy->pos = vec_p_vec(ray.ro, mul_vec(ray.rd, t.x));
+				m = vec_m_vec(cy->pos, cy->origin);
+				cy->normal = normalize(vec_m_vec(m, mul_vec(cy->n_vector, scalar_product(cy->n_vector, m))));
+				if (scalar_product(ray.rd, cy->normal) > 0)
+					cy->normal = mul_vec(cy->normal, -1);
+				return (t.x);
+			}
+		}
 	}
-	if (y.y > 0.0 && y.y < sqrt(len_squared(cy->ao)) * 0.5)
+	if (t.y > 0)
 	{
-		printf("Here2\n");
-		cy->t = t.y;
-		cy->pos = vec_p_vec(ray.ro, mul_vec(ray.rd, cy->t));
-		cy->n_vector = normalize(vec_m_vec(vec_p_vec(cy->oc, \
-			mul_vec(ray.rd, cy->t)), mul_vec(cy->c, y.y)));
-		return (t.y);
+		a = vec_p_vec(cy->origin, mul_vec(cy->n_vector, cy->h));
+		b = vec_p_vec(ray.ro, mul_vec(ray.rd, t.y));
+		if (scalar_product(cy->n_vector, vec_m_vec(b, cy->origin)) > 0)
+		{
+			if (scalar_product(cy->n_vector, vec_m_vec(b, a)) < 0)
+			{
+				cy->t = t.y;
+				cy->pos = vec_p_vec(ray.ro, mul_vec(ray.rd, t.y));
+				m = vec_m_vec(cy->pos, cy->origin);
+				cy->normal = normalize(vec_m_vec(m, mul_vec(cy->n_vector, scalar_product(cy->n_vector, m))));
+				if (scalar_product(ray.rd, cy->normal) > 0)
+					cy->normal = mul_vec(cy->normal, -1);
+				return (t.y);
+			}
+		}
 	}
-	else
-		return (-1.0);
-	if (scalar_product(ray.rd, cy->n_vector) > 0)
-		cy->n_vector = mul_vec(cy->n_vector, -1);
-	return (cy->t);
+	return (-1);
 }
+
+// double	slave(t_cylinder *cy, t_vec2 t, t_ray ray, t_vec2 y)
+// {
+// 	y.x = scalar_product(cy->c, cy->oc) + t.x * scalar_product(cy->c, ray.rd);
+// 	y.y = scalar_product(cy->c, cy->oc) + t.y * scalar_product(cy->c, ray.rd);
+// 	if (y.x > 0.0 && y.x < sqrt(len_squared(cy->ao)))
+// 	{
+// 		// printf("Here1\n");
+// 		cy->t = t.x;
+// 		cy->pos = vec_p_vec(ray.ro, mul_vec(ray.rd, cy->t));
+// 		cy->n_vector = normalize(vec_m_vec(vec_p_vec(cy->oc, \
+// 			mul_vec(ray.rd, cy->t)), mul_vec(cy->c, y.x)));
+// 		return (t.x);
+// 	}
+// 	if (y.y > 0.0 && y.y < sqrt(len_squared(cy->ao)))
+// 	{
+// 		// printf("Here2\n");
+// 		cy->t = t.y;
+// 		cy->pos = vec_p_vec(ray.ro, mul_vec(ray.rd, cy->t));
+// 		cy->n_vector = normalize(vec_m_vec(vec_p_vec(cy->oc, \
+// 			mul_vec(ray.rd, cy->t)), mul_vec(cy->c, y.y)));
+// 		return (t.y);
+// 	}
+// 	else
+// 		return (-1.0);
+// 	if (scalar_product(ray.rd, cy->n_vector) > 0)
+// 		cy->n_vector = mul_vec(cy->n_vector, -1);
+// 	return (cy->t);
+// }
 
 double	cy_inter(t_vec3 ro, t_vec3 rd, t_cylinder *cylinder)
 {
@@ -153,18 +198,23 @@ double	cy_inter(t_vec3 ro, t_vec3 rd, t_cylinder *cylinder)
 	double	b;
 	double	c;
 	t_vec2	t;
-	t_vec3	x;
+	t_vec3	x[2];
 
-	x = vec_m_vec(ro, cylinder->origin);
-	a = len_squared(rd) - pow(scalar_product(rd, cylinder->n_vector), 2.0);
-	c = len_squared(x) - pow(scalar_product(x, cylinder->n_vector), 2.0) \
-		* cylinder->diameter / 2 * cylinder->diameter / 2;
-	b = 2 * (scalar_product(rd, x) - scalar_product(rd, cylinder->n_vector) \
-		* scalar_product(x, cylinder->n_vector));
-	cylinder->a = vec_p_vec(cylinder->origin, \
-		mul_vec(cylinder->n_vector, cylinder->h));
-	cylinder->ao = vec_m_vec(cylinder->a, cylinder->origin);
-	cylinder->c = mul_vec(cylinder->ao, 1 / sqrt(len_squared(cylinder->ao)));
+	// x = vec_m_vec(ro, cylinder->origin);
+	// a = len_squared(rd) - pow(scalar_product(rd, cylinder->n_vector), 2.0);
+	// c = len_squared(x) - pow(scalar_product(x, cylinder->n_vector), 2.0) \
+	// 	- (cylinder->diameter / 2) * (cylinder->diameter / 2);
+	// b = 2 * (scalar_product(rd, x) - scalar_product(rd, cylinder->n_vector) \
+	// 	* scalar_product(x, cylinder->n_vector));
+	x[0] = vec_m_vec(rd, mul_vec(cylinder->n_vector, scalar_product(rd, cylinder->n_vector)));
+	a = scalar_product(x[0], x[0]);
+	x[1] = vec_m_vec(vec_m_vec(ro, cylinder->origin), mul_vec(cylinder->n_vector, scalar_product(vec_m_vec(ro, cylinder->origin), cylinder->n_vector)));
+	b = 2 * scalar_product(x[0], x[1]);
+	c = scalar_product(x[1], x[1]) - pow((cylinder->diameter / 2), 2.0);
+	// cylinder->a = vec_p_vec(cylinder->origin, \
+	// 	mul_vec(cylinder->n_vector, cylinder->h));
+	// cylinder->ao = vec_m_vec(cylinder->a, cylinder->origin);
+	// cylinder->c = mul_vec(cylinder->ao, 1 / sqrt(len_squared(cylinder->ao)));
 	t = quadratic(a, b, c);
 	if (t.x < 0)
 	{
@@ -172,5 +222,5 @@ double	cy_inter(t_vec3 ro, t_vec3 rd, t_cylinder *cylinder)
 		if (t.x < 0)
 			return (-1.0);
 	}
-	return (slave(cylinder, t, new_ray(ro, rd), new_vec2(0, 0)));
+	return (limit(t, cylinder, new_ray(ro, rd)));
 }

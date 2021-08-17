@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: demilan <demilan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arsenijdrozdov <arsenijdrozdov@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 15:31:33 by demilan           #+#    #+#             */
-/*   Updated: 2021/08/16 21:07:08 by demilan          ###   ########.fr       */
+/*   Updated: 2021/08/17 01:41:31 by arsenijdroz      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void	init_global_struct(void)
 	g_scene.c_pl = 0;
 	g_scene.c_cy = 0;
 	g_scene.req_count_obj = 0;
-	g_scene.itmin = __DBL_MAX__;
 }
 
 int	main(int argc, char	**argv)

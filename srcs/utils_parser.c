@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_parser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: demilan <demilan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arsenijdrozdov <arsenijdrozdov@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 21:22:02 by demilan           #+#    #+#             */
-/*   Updated: 2021/08/16 21:22:04 by demilan          ###   ########.fr       */
+/*   Updated: 2021/08/17 01:52:42 by arsenijdroz      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	parse_sphere(char *str)
 		exit_error("Invalid radius sphere", ERR_CREATE_SPHERE);
 	g_scene.sphers[g_scene.c_sp].color_light = parse_vec3(&str);
 	vec3 = g_scene.sphers[g_scene.c_sp].color_light;
-	if ((vec3.x < 0.0 || vec3.x > 255.00000) || (vec3.y < 0.0 \
+	if ((vec3.x < 0.0 || vec3.x > 255.0) || (vec3.y < 0.0 \
 		|| vec3.y > 255.0) || (vec3.z < 0.0 || vec3.z > 255.0))
 		exit_error("Invalid color sphere", ERR_CREATE_SPHERE);
 	g_scene.sphers[g_scene.c_sp].color_light = \
@@ -103,7 +103,7 @@ void	parse_cylinder(char *str)
 	g_scene.cylinder[g_scene.c_cy].origin = parse_vec3(&str);
 	g_scene.cylinder[g_scene.c_cy].n_vector = parse_vec3(&str);
 	vec3 = g_scene.cylinder[g_scene.c_cy].n_vector;
-	if (vec3.x + vec3.y + vec3.z > 1.0)
+	if (vec3.x + vec3.y + vec3.z > 1.0)//сумма квадратов а не просто сумма
 		exit_error("Invalid normalized vector cylinder", ERR_CREATE_CYLINDER);
 	g_scene.cylinder[g_scene.c_cy].diameter = ft_atof(&str);
 	if (g_scene.cylinder[g_scene.c_cy].diameter < 0.0)

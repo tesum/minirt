@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: demilan <demilan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arsenijdrozdov <arsenijdrozdov@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 15:56:11 by demilan           #+#    #+#             */
-/*   Updated: 2021/08/16 12:56:59 by demilan          ###   ########.fr       */
+/*   Updated: 2021/08/17 02:34:21 by arsenijdroz      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ typedef struct s_cylinder
 {
 	t_vec3		origin;
 	t_vec3		n_vector;
+	t_vec3		normal;
 	double		diameter;
 	double		h;
 	t_vec3		color;

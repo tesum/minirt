@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   color_pixel.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: demilan <demilan@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arsenijdrozdov <arsenijdrozdov@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/12 17:28:28 by demilan           #+#    #+#             */
-/*   Updated: 2021/08/16 21:07:52 by demilan          ###   ########.fr       */
+/*   Updated: 2021/08/17 01:41:43 by arsenijdroz      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
