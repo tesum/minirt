@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsenijdrozdov <arsenijdrozdov@student.    +#+  +:+       +#+        */
+/*   By: demilan <demilan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 15:56:11 by demilan           #+#    #+#             */
-/*   Updated: 2021/08/17 02:34:21 by arsenijdroz      ###   ########.fr       */
+/*   Updated: 2021/08/17 18:27:29 by demilan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define MINIRT_H
 # define MAX_OBJ				100
 # define ERR_MAP				250
-# define ERR_MALLOC				34
+# define ERR_SCENE_OBJ			251
 # define ERR_CREATE_ALIGHT		255
 # define ERR_CREATE_CAM			256
 # define ERR_CREATE_LIGHT		257
@@ -29,11 +29,11 @@
 # include "../gnl/get_next_line.h"
 # include "../ft_printf.h"
 
-typedef struct s_vec2
+typedef struct s_inter_t
 {
 	double	x;
 	double	y;	
-}				t_vec2;
+}				t_inter_t;
 
 typedef struct s_vec3
 {
@@ -41,14 +41,6 @@ typedef struct s_vec3
 	double	y;
 	double	z;
 }				t_vec3;
-
-typedef struct s_vec4
-{
-	double	x;
-	double	y;
-	double	z;
-	double	w;
-}				t_vec4;
 
 typedef struct s_ray
 {
@@ -90,14 +82,14 @@ typedef struct s_sphere
 typedef struct s_light
 {
 	t_vec3	origin;
-	double	aspect;
 	t_vec3	color;
+	double	aspect;
 }				t_light;
 
 typedef struct s_alight
 {
-	double	aspect;
 	t_vec3	color;
+	double	aspect;
 }				t_alight;
 
 typedef struct s_plane
@@ -114,19 +106,11 @@ typedef struct s_cylinder
 	t_vec3		origin;
 	t_vec3		n_vector;
 	t_vec3		normal;
+	t_vec3		color;
+	t_vec3		pos;
 	double		diameter;
 	double		h;
-	t_vec3		color;
 	double		t;
-	t_vec3		pos;
-
-	t_vec3		a;
-	t_vec3		c;
-	t_vec3		ao;
-	t_vec3		oc;
-	double		k0;
-	double		k1;
-	double		k2;
 }				t_cylinder;
 
 typedef struct s_scene
@@ -148,11 +132,12 @@ typedef struct s_scene
 }				t_scene;
 
 t_scene		g_scene;
-int			isElem(char *s);
 
+// new
 t_vec3		new_vec3(double x, double y, double z);
-t_vec2		new_vec2(double x, double y);
+t_inter_t	new_intert(double x, double y);
 t_ray		new_ray(t_vec3 ro, t_vec3 rd);
+void		new_camera(void);
 
 // parser
 void		parce(char *map);
@@ -164,55 +149,37 @@ void		parse_plane(char *str);
 void		parse_cylinder(char *str);
 t_vec3		parse_vec3(char **str);
 
-// sphere
-
-double		sphSoftShadow(t_vec3 *ro, t_vec3 *rd, t_vec3 *ce, double ra);
+// intersects
+t_vec3		castRay(t_ray ray);
+double		sph_intersect(t_vec3 ro, t_vec3 rd, t_sphere *sphere);
 double		pl_intersect(t_vec3 ro, t_vec3 rd, t_plane *plane);
 double		cy_inter(t_vec3 ro, t_vec3 rd, t_cylinder *cylinder);
+double		limit(t_inter_t t, t_cylinder *cy, t_ray ray);
 
 //	My math
-
 double		ft_atof(char **str);
 double		f_max(double one, double two);
 double		f_min(double one, double two);
 double		smoothstep(double min, double max, double value);
 
 // UTILS
-
-char		**ft_split_rt(char const *s, char *c);
 void		free_split(char **str);
-
 void		color_pixel(t_mlx *mlx, t_vec3 color);
-t_vec3		new_rgb(int r, int g, int b);
-int			create_rgb(t_vec3 *rgb);
-t_vec3		normalize(t_vec3 p);
+void		exit_error(char *error, int code);
+char		**ft_split_rt(char const *s, char *c);
+double		diffuse(t_vec3 pos, t_vec3 normal, t_vec3 rd);
+double		len_squared(t_vec3 vec3);
 double		scalar_product(t_vec3 vec1, t_vec3 vec2);
+t_vec3		normalize(t_vec3 p);
 t_vec3		mul_vec(t_vec3 vec, double k);
 t_vec3		vec_m_vec(t_vec3 vec1, t_vec3 vec2);
 t_vec3		vec_p_vec(t_vec3 vec1, t_vec3 vec2);
 t_vec3		vec_mul_vec(t_vec3 vec1, t_vec3 vec2);
 t_vec3		cross(t_vec3 vec1, t_vec3 vec2);
 t_vec3		vec_div(t_vec3 vec, double k);
-double		len_squared(t_vec3 vec3);
-t_vec2		get_pixel(t_vec2 resolution, int mlx_x, int mlx_y);
+t_vec3		get_ray(double w, double h, t_camera cam);
 
-t_vec3		get_ray(double w, double h);
-double		diffuse(t_vec3 pos, t_vec3 normal, t_vec3 rd);
-
-t_scene		*new_scene(t_camera *cam, t_sphere *sphere);
-void		new_camera(void);
-
-void		ray_tracing(void *mlx, void *win, t_scene *scene);
-// t_vplane	*get_view_plane(double width, double hight, double FOV);
-int			sphere_intersect(t_camera *cam, t_vec3 *ray, t_sphere *sphere);
-
-t_light		new_light(t_vec3 origin, double aspect, t_vec3 color);
-t_sphere	new_sphere(t_vec3 center, double r, t_vec3 color);
-
-// check
-double		sph_intersect(t_vec3 ro, t_vec3 rd, t_sphere *sphere);
-t_vec3		castRay(t_ray ray);
-
-void		er_exit(int errno);
-void		exit_error(char *error, int code);
+// hooks
+int			close_esc(int keycode, t_mlx *img);
+int			destroy(void);
 #endif

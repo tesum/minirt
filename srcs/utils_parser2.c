@@ -6,19 +6,34 @@
 /*   By: demilan <demilan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 21:22:06 by demilan           #+#    #+#             */
-/*   Updated: 2021/08/16 21:22:07 by demilan          ###   ########.fr       */
+/*   Updated: 2021/08/17 17:47:09 by demilan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
+void	continue_atof(char **str, double *number)
+{
+	int		k;
+
+	k = 10;
+	if (**str == '.')
+	{
+		*str += 1;
+		while (**str && ft_isdigit(**str))
+		{
+			*number = *number + (double)(**str - '0') / k;
+			*str += 1;
+			k *= 10;
+		}
+	}
+}
+
 double	ft_atof(char **str)
 {
-	size_t	i;
 	double	number;
 	int		m;
 
-	i = 0;
 	number = 0.0;
 	m = 1;
 	while (**str == ' ' || (**str >= 9 && **str <= 13))
@@ -33,16 +48,7 @@ double	ft_atof(char **str)
 		number = number * 10.0 + (**str - '0');
 		*str += 1;
 	}
-	if (**str == '.')
-	{
-		*str += 1;
-		while (**str && ft_isdigit(**str))
-		{
-			number = number * 10.0 + (**str - '0');
-			*str += 1;
-		}
-		number /= 10;
-	}
+	continue_atof(str, &number);
 	number *= m;
 	return (number);
 }
@@ -71,6 +77,6 @@ t_vec3	parse_vec3(char **str)
 
 void	exit_error(char *error, int code)
 {
-	perror(error);
+	printf("Error\n%s\n", error);
 	exit(code);
 }

@@ -3,22 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   RT.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsenijdrozdov <arsenijdrozdov@student.    +#+  +:+       +#+        */
+/*   By: demilan <demilan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 18:55:41 by demilan           #+#    #+#             */
-/*   Updated: 2021/08/17 02:37:59 by arsenijdroz      ###   ########.fr       */
+/*   Updated: 2021/08/17 17:40:43 by demilan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
-
-t_vec3	*minus_vec(t_vec3 *vec)
-{
-	vec->x = -vec->x;
-	vec->y = -vec->y;
-	vec->z = -vec->z;
-	return (vec);
-}
 
 void	cast_sph(t_ray ray, size_t i, t_vec3 *pos, t_vec3 *normal)
 {

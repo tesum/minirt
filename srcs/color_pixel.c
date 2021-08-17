@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   color_pixel.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsenijdrozdov <arsenijdrozdov@student.    +#+  +:+       +#+        */
+/*   By: demilan <demilan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/12 17:28:28 by demilan           #+#    #+#             */
-/*   Updated: 2021/08/17 01:41:43 by arsenijdroz      ###   ########.fr       */
+/*   Updated: 2021/08/17 18:09:18 by demilan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,12 @@ t_vec3	mul_vec(t_vec3 vec, double k)
 	return (res);
 }
 
-t_vec2	get_pixel(t_vec2 resolution, int mlx_x, int mlx_y)
+t_vec3	*minus_vec(t_vec3 *vec)
 {
-	t_vec2	pixel;
-
-	pixel.x = ((2 * mlx_x) - resolution.x) / resolution.y;
-	pixel.y = ((2 * mlx_y) - resolution.x) / resolution.y;
-	return (pixel);
+	vec->x = -vec->x;
+	vec->y = -vec->y;
+	vec->z = -vec->z;
+	return (vec);
 }
 
 void	color_pixel(t_mlx *mlx, t_vec3 color)
@@ -46,26 +45,25 @@ void	color_pixel(t_mlx *mlx, t_vec3 color)
 	mlx->color = mlx->rgb.x + mlx->rgb.y + mlx->rgb.z;
 }
 
-int	create_rgb(t_vec3 *rgb)
+void	new_camera(void)
 {
-	int	t;
-	int	r;
-	int	g;
-	int	b;
+	double		ratio;
+	double		vp_h;
+	double		vp_w;
+	double		len;
+	t_vec3		vup;
 
-	t = 1;
-	r = rgb->x;
-	g = rgb->x;
-	b = rgb->z;
-	return (t << 24 | r << 16 | g << 8 | b);
-}
-
-t_vec3	new_rgb(int r, int g, int b)
-{
-	t_vec3	color;
-
-	color.x = r;
-	color.y = g;
-	color.z = b;
-	return (color);
+	vup = new_vec3(0.0, 1.0, 0.0);
+	ratio = 16.0 / 9.0;
+	vp_h = tan((((double)g_scene.cams.FOV) * M_PI / 180) / 2.0);
+	vp_w = ratio * vp_h;
+	g_scene.cams.w = normalize(\
+		vec_m_vec(g_scene.cams.origin, g_scene.cams.direction));
+	g_scene.cams.u = normalize(cross(vup, g_scene.cams.w));
+	g_scene.cams.v = cross(g_scene.cams.w, g_scene.cams.u);
+	g_scene.cams.horizontal = mul_vec(g_scene.cams.u, vp_w * 2);
+	g_scene.cams.vertical = mul_vec(g_scene.cams.v, vp_h * 2);
+	g_scene.cams.l_left_corner = vec_m_vec(vec_m_vec(\
+		vec_m_vec(g_scene.cams.origin, mul_vec(g_scene.cams.u, vp_w)), \
+		mul_vec(g_scene.cams.v, vp_h)), g_scene.cams.w);
 }

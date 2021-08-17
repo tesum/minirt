@@ -3,24 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsenijdrozdov <arsenijdrozdov@student.    +#+  +:+       +#+        */
+/*   By: demilan <demilan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 15:31:33 by demilan           #+#    #+#             */
-/*   Updated: 2021/08/17 01:41:31 by arsenijdroz      ###   ########.fr       */
+/*   Updated: 2021/08/17 18:28:35 by demilan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
-
-int	close_esc(int keycode, t_mlx *img)
-{
-	if (keycode == 53)
-	{
-		mlx_destroy_window(img->mlx_p, img->win_p);
-		exit(0);
-	}
-	return (0);
-}
 
 void	init_global_struct(void)
 {
@@ -49,8 +39,9 @@ int	main(int argc, char	**argv)
 		i = 0;
 		while (i < g_scene.width)
 		{
-			color_pixel(&g_scene.mlx,
-				castRay(new_ray(g_scene.cams.origin, get_ray(i, j))));
+			color_pixel(&g_scene.mlx, \
+				castRay(new_ray(g_scene.cams.origin, \
+					get_ray(i, j, g_scene.cams))));
 			mlx_pixel_put(g_scene.mlx.mlx_p,
 				g_scene.mlx.win_p, i, j, g_scene.mlx.color);
 			i++;
@@ -58,5 +49,6 @@ int	main(int argc, char	**argv)
 		j++;
 	}
 	mlx_hook(g_scene.mlx.win_p, 2, 1L << 0, close_esc, &g_scene.mlx);
+	mlx_hook(g_scene.mlx.win_p, 17, 1L << 0, destroy, &g_scene.mlx);
 	mlx_loop(g_scene.mlx.mlx_p);
 }
