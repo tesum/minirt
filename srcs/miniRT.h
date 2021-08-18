@@ -6,15 +6,16 @@
 /*   By: demilan <demilan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 15:56:11 by demilan           #+#    #+#             */
-/*   Updated: 2021/08/17 18:27:29 by demilan          ###   ########.fr       */
+/*   Updated: 2021/08/19 00:49:32 by demilan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 # define MINIRT_H
 # define MAX_OBJ				100
-# define ERR_MAP				250
-# define ERR_SCENE_OBJ			251
+# define ERR_ARGUMENT			250
+# define ERR_MAP				251
+# define ERR_SCENE_OBJ			252
 # define ERR_CREATE_ALIGHT		255
 # define ERR_CREATE_CAM			256
 # define ERR_CREATE_LIGHT		257
@@ -27,7 +28,6 @@
 # include "mlx.h"
 # include "../libft/libft.h"
 # include "../gnl/get_next_line.h"
-# include "../ft_printf.h"
 
 typedef struct s_inter_t
 {

@@ -6,7 +6,7 @@
 /*   By: demilan <demilan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 21:21:54 by demilan           #+#    #+#             */
-/*   Updated: 2021/08/17 18:09:38 by demilan          ###   ########.fr       */
+/*   Updated: 2021/08/19 00:47:48 by demilan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,12 @@ int	shadow(t_vec3 ro, t_vec3 rd)
 	return (0);
 }
 
-double	fongs_model(double power, t_vec3 l_dir, double dot_l, t_vec3 normal)
+double	phongs_model(double power, t_vec3 l_dir, t_vec3	rd, t_vec3 normal)
 {
 	t_vec3	r;
-	t_vec3	rd;
 	double	res;
 
 	res = power;
-	res += (f_max(dot_l, 0.0) * g_scene.lights.aspect) / \
-		(sqrt(len_squared(normal)) * sqrt(len_squared(l_dir)));
 	r = vec_m_vec(mul_vec(mul_vec(normal, 2), \
 		scalar_product(normal, l_dir)), l_dir);
 	rd = mul_vec(rd, -1);
@@ -58,7 +55,6 @@ double	fongs_model(double power, t_vec3 l_dir, double dot_l, t_vec3 normal)
 double	diffuse(t_vec3 pos, t_vec3 normal, t_vec3 rd)
 {
 	t_vec3	light_dir;
-	t_vec3	r;
 	double	dot_light;
 	double	power;
 
@@ -72,13 +68,5 @@ double	diffuse(t_vec3 pos, t_vec3 normal, t_vec3 rd)
 	}
 	power += (f_max(dot_light, 0.0) * g_scene.lights.aspect) / \
 		(sqrt(len_squared(normal)) * sqrt(len_squared(light_dir)));
-	r = vec_m_vec(mul_vec(mul_vec(normal, 2), \
-		scalar_product(normal, light_dir)), light_dir);
-	rd = mul_vec(rd, -1);
-	power += pow(f_max(scalar_product(r, rd) / (sqrt(len_squared(r)) * \
-		sqrt(len_squared(rd))), 0.0), 256.0) * g_scene.lights.aspect;
-	// printf("power = %f\n", power);
-	// power = fongs_model(g_scene.alight.aspect, light_dir, dot_light, normal);
-	// printf("fong power = %f\n", power);
-	return (f_min(power, 1.0));
+	return (f_min(phongs_model(power, light_dir, rd, normal), 1.0));
 }

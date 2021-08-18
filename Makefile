@@ -24,14 +24,13 @@ HEADER	=	srcs/miniRT.h
 OBJ		=	$(patsubst %.c, %.o, $(SRCS))
 
 CC		=	gcc
-CFLAGS	=	-I. #-Wall -Wextra -Werror
+CFLAGS	=	-I. -Wall -Wextra -Werror
 
 RM		=	rm -f
 
 all		:	$(LIBFT) $(MLX) $(NAME)
 
 $(NAME)	:	$(OBJ) $(HEADER)
-			#  gcc -g -Lmlx -lmlx -framework OpenGL -framework AppKit libmlx.dylib libftprintf.a libft.a $(SRCS) -o $(NAME)
 			gcc -g $(MLX) -framework OpenGL -framework AppKit -Llibft -lft -o $(NAME) $(OBJ)
 
 $(LIBFT) :
@@ -49,6 +48,7 @@ fclean	:	clean
 			$(RM) $(NAME)
 			$(MAKE) fclean -C libft/
 			$(MAKE) clean -C mlx1/
+			$(RM) libmlx.dylib
 
 re		:	fclean clean all
 

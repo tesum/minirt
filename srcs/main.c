@@ -6,7 +6,7 @@
 /*   By: demilan <demilan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 15:31:33 by demilan           #+#    #+#             */
-/*   Updated: 2021/08/17 18:28:35 by demilan          ###   ########.fr       */
+/*   Updated: 2021/08/19 00:43:28 by demilan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,11 @@ void	init_global_struct(void)
 	g_scene.req_count_obj = 0;
 }
 
-int	main(int argc, char	**argv)
+void	rendering(void)
 {
 	int			i;
 	int			j;
 
-	init_global_struct();
-	parce(argv[1]);
 	j = 0;
 	g_scene.mlx.win_p = mlx_new_window(g_scene.mlx.mlx_p, \
 		g_scene.width, g_scene.hight, "miniRT");
@@ -48,6 +46,15 @@ int	main(int argc, char	**argv)
 		}
 		j++;
 	}
+}
+
+int	main(int argc, char	**argv)
+{
+	if (argc != 2)
+		exit_error("Invalid count argument", ERR_ARGUMENT);
+	init_global_struct();
+	parce(argv[1]);
+	rendering();
 	mlx_hook(g_scene.mlx.win_p, 2, 1L << 0, close_esc, &g_scene.mlx);
 	mlx_hook(g_scene.mlx.win_p, 17, 1L << 0, destroy, &g_scene.mlx);
 	mlx_loop(g_scene.mlx.mlx_p);

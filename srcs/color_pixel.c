@@ -6,7 +6,7 @@
 /*   By: demilan <demilan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/12 17:28:28 by demilan           #+#    #+#             */
-/*   Updated: 2021/08/17 18:09:18 by demilan          ###   ########.fr       */
+/*   Updated: 2021/08/19 00:45:34 by demilan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ void	new_camera(void)
 	double		ratio;
 	double		vp_h;
 	double		vp_w;
-	double		len;
 	t_vec3		vup;
 
 	vup = new_vec3(0.0, 1.0, 0.0);

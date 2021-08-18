@@ -6,7 +6,7 @@
 /*   By: demilan <demilan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 15:41:54 by demilan           #+#    #+#             */
-/*   Updated: 2021/08/17 17:10:11 by demilan          ###   ########.fr       */
+/*   Updated: 2021/08/19 00:44:16 by demilan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ void	parce(char *map)
 	int		fd;
 	int		k;
 	char	*line;
-	char	**split_line;
 
 	check_map_name(map);
 	fd = open(map, O_RDONLY);

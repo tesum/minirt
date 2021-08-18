@@ -6,13 +6,13 @@
 /*   By: demilan <demilan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/11 18:55:41 by demilan           #+#    #+#             */
-/*   Updated: 2021/08/17 17:40:43 by demilan          ###   ########.fr       */
+/*   Updated: 2021/08/19 00:45:26 by demilan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-void	cast_sph(t_ray ray, size_t i, t_vec3 *pos, t_vec3 *normal)
+void	cast_sph(t_ray ray, int i, t_vec3 *pos, t_vec3 *normal)
 {
 	double	it;
 
@@ -26,7 +26,7 @@ void	cast_sph(t_ray ray, size_t i, t_vec3 *pos, t_vec3 *normal)
 	}
 }
 
-void	cast_pl(t_ray ray, size_t i, t_vec3 *pos, t_vec3 *normal)
+void	cast_pl(t_ray ray, int i, t_vec3 *pos, t_vec3 *normal)
 {
 	double	t;
 
@@ -40,7 +40,7 @@ void	cast_pl(t_ray ray, size_t i, t_vec3 *pos, t_vec3 *normal)
 	}
 }
 
-void	cast_cy(t_ray ray, size_t i, t_vec3 *pos, t_vec3 *normal)
+void	cast_cy(t_ray ray, int i, t_vec3 *pos, t_vec3 *normal)
 {
 	double	t;
 
@@ -56,10 +56,9 @@ void	cast_cy(t_ray ray, size_t i, t_vec3 *pos, t_vec3 *normal)
 
 t_vec3	castRay(t_ray ray)
 {
-	size_t	i;
+	int		i;
 	t_vec3	pos;
 	t_vec3	normal;
-	t_vec3	*menu;
 
 	i = 0;
 	g_scene.itmin = __DBL_MAX__;

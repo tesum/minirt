@@ -23,7 +23,7 @@ RM 			= rm -f
 all:		$(NAME)
 
 $(NAME):	$(OBJ) $(HEADER) $(OBJ_BONUS)
-			ar rcs $(NAME) $?
+			@ar rcs $(NAME) $?
 
 %.o : 		%.c $(HEADER)
 			$(CC) $(FLAGS) -c $< -o $@

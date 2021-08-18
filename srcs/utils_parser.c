@@ -6,7 +6,7 @@
 /*   By: demilan <demilan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 21:22:02 by demilan           #+#    #+#             */
-/*   Updated: 2021/08/17 17:41:24 by demilan          ###   ########.fr       */
+/*   Updated: 2021/08/19 00:44:39 by demilan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ void	parse_light(char *str)
 void	parse_sphere(char *str)
 {
 	t_vec3		vec3;
-	t_sphere	sphere;
 
 	if (str[0] != 's' || str[1] != 'p')
 		return ;
@@ -71,7 +70,6 @@ void	parse_sphere(char *str)
 
 void	parse_plane(char *str)
 {
-	char		**vec;
 	t_vec3		vec3;
 
 	if (str[0] != 'p' || str[1] != 'l')
